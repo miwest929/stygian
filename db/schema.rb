@@ -13,7 +13,7 @@
 
 ActiveRecord::Schema.define(version: 20131223161710) do
 
-  create_table "git_commit_tables", force: true do |t|
+  create_table "git_commits", force: true do |t|
     t.string  "author"
     t.string  "commit_id"
     t.string  "commit_date"
@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20131223161710) do
     t.integer "repo_id"
   end
 
-  create_table "repo_tables", force: true do |t|
+  create_table "repos", force: true do |t|
     t.string   "tag"
     t.datetime "created_at"
     t.datetime "updated_at"

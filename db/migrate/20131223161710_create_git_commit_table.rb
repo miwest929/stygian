@@ -1,6 +1,6 @@
 class CreateGitCommitTable < ActiveRecord::Migration
   def change
-    create_table :git_commit_tables do |t|
+    create_table :git_commits do |t|
       t.string :author
       t.string :commit_id
       t.string :commit_date
