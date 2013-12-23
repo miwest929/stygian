@@ -1,3 +1,3 @@
 class Repo < ActiveRecord::Base
-  has_many :git_commits
+  has_many :commits, foreign_key: 'repo_id', class_name: 'GitCommit'
 end
