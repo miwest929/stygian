@@ -9,12 +9,15 @@ module GitHistory
     begin
       # tag is the GitHub repo name
       tag = /\/(.*)\.git/.match(path)[1]
-  #   raise "Repo with tag '#{tag}' is already registered." if Repo.find_by_tag(tag)
+      raise "Repo with tag '#{tag}' is already registered." if Repo.find_by_tag(tag)
 
       system("cd #{Rails.root}/tmp && git clone #{path} && cd #{tag} && git log > temphist.txt")
       repo = parse_git_history(tag)
-      repo.commits.reverse.each do |commit|
-        system("cd #{Rails.root}/tmp/#{tag} && git show #{commit.commit_id} > commit#{commit.commit_id}.txt")
+
+      # For each commit and it's diff parse
+      repo.for_each_commit do |commit, diff|
+        changes = parse_commit_diff(diff)
+        puts changes
       end
     ensure
       puts "Cleaning up..."
@@ -57,5 +60,37 @@ protected
 
     repo.save
     repo
+  end
+
+  def parse_commit_diff(diff)
+    empty_file = '/dev/null'
+
+    commit_changes = {}
+    change_type = nil
+    filename = nil
+    diff.each do |line|
+      parse_commit_line(line, '---') do |value|
+        filename = change_type = nil
+        change_type = if value == empty_file
+          "NEW"
+        else
+          filename = value[2..-1]
+          "UPDATE"
+        end
+      end
+
+      parse_commit_line(line, '+++') do |value|
+        if value == empty_file
+          change_type = "REMOVE"
+        elsif filename.nil?
+          filename = value[2..-1]
+        end
+
+        commit_changes[filename] = change_type
+      end
+
+    end
+
+     commit_changes
   end
 end
