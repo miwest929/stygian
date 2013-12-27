@@ -14,7 +14,7 @@ module GitHistory
       system("cd #{Rails.root}/tmp && git clone #{path} && cd #{tag} && git log > temphist.txt")
       repo = parse_git_history(tag)
 
-      # For each commit and it's diff parse
+      # For each commit parse it's diff
       repo.for_each_commit do |commit, diff|
         changes = parse_commit_diff(diff)
         puts changes
@@ -63,34 +63,6 @@ protected
   end
 
   def parse_commit_diff(diff)
-    empty_file = '/dev/null'
-
-    commit_changes = {}
-    change_type = nil
-    filename = nil
-    diff.each do |line|
-      parse_commit_line(line, '---') do |value|
-        filename = change_type = nil
-        change_type = if value == empty_file
-          "NEW"
-        else
-          filename = value[2..-1]
-          "UPDATE"
-        end
-      end
-
-      parse_commit_line(line, '+++') do |value|
-        if value == empty_file
-          change_type = "REMOVE"
-        elsif filename.nil?
-          filename = value[2..-1]
-        end
-
-        commit_changes[filename] = change_type
-      end
-
-    end
-
-     commit_changes
+     DIFF_PARSER.parse(diff)
   end
 end
