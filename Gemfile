@@ -16,4 +16,4 @@ gem 'oauth2'
 gem "octokit", "~> 3.0"
 gem 'faraday-http-cache'
 gem 'couchrest'
-gem 'kafka'
+gem 'kafka-rb'
