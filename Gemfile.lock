@@ -63,6 +63,7 @@ GEM
     json (1.8.1)
     jwt (0.1.11)
       multi_json (>= 1.5)
+    kafka (0.0.2)
     kgio (2.9.2)
     libv8 (3.16.14.3)
     mail (2.5.4)
@@ -151,6 +152,7 @@ DEPENDENCIES
   faraday-http-cache
   jbuilder (~> 1.2)
   jquery-rails
+  kafka
   mysql2
   oauth2
   octokit (~> 3.0)
