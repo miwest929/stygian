@@ -1,4 +1,5 @@
 ## Install CouchDB ##
+   *Stay tuned*
 
 ## Install Kafka ##
 
@@ -14,6 +15,6 @@
 
 ### Run Zookeeper and Kafka ###
 
-$KAFKA/zookeeper-server-start.sh $KAFKA_CONFIG/zookeeper.properties
-$KAFKA/kafka-server-start.sh $KAFKA_CONFIG/server.properties
+**zookeeper:** $KAFKA/zookeeper-server-start.sh $KAFKA_CONFIG/zookeeper.properties  
+**kafka:** $KAFKA/kafka-server-start.sh $KAFKA_CONFIG/server.properties
 
