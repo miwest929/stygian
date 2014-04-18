@@ -1,8 +1,11 @@
+require 'kafka'
+
 module Github
   extend self
 
   @last_response = nil
   @repo = nil
+  @producer = Kafka::Producer.new
 
   def load_commits(repo)
     @repo = repo
@@ -46,6 +49,7 @@ module Github
 
       COUCHDB_DB.update_doc(doc['_id']) do |d|
         d[:patch] = get_patch( repo, d['sha'] )
+        @producer.push( Kafka::Message.new(d.to_json) )
         d
       end
     end
