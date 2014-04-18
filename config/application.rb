@@ -9,6 +9,6 @@ Bundler.require(:default, Rails.env)
 
 module Codelife
   class Application < Rails::Application
-    config.autoload_paths += %W(#{config.root}/lib #{config.root}/lib/github)
+    config.autoload_paths += %W(#{config.root}/lib #{config.root}/lib/github #{config.root}/lib/messaging)
   end
 end

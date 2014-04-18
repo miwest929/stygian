@@ -1,4 +1,5 @@
 require 'kafka'
+require 'messaging/kafka'
 
 namespace :kafka do
   task :produce => :environment do
@@ -14,16 +15,8 @@ namespace :kafka do
   end
 
   task :consume => :environment do
-    consumer = Kafka::Consumer.new
-
     puts "Ready to consume commit messages..."
-    consumer.loop do |messages|
-      messages.each do |m|
-        data = m.payload
-
-        puts data 
-      end
-    end
+    Messaging::Kafka.new.run {|message_data| puts message_data}
   end
 
   def display_progress(msg, count, increment)
