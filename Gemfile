@@ -17,3 +17,7 @@ gem "octokit", "~> 3.0"
 gem 'faraday-http-cache'
 gem 'couchrest'
 gem 'kafka-rb'
+
+group :development do
+  gem 'wirble'
+end
